@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Search</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="container">
+    <label for="cardNumber">Card number</label>
+    <input type="text" id="cardNumber" name="cardNumber" class="input">
+
+    <button type="button" class="btn" onclick="postData()">Search</button>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>BIN</th>
+            <th>Alpha Code</th>
+            <th>Bank</th>
+        </tr>
+        </thead>
+        <tbody id="resultTable">
+        <!-- Data will be dynamically inserted here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    async function fetchData() {
+        let cardNumber = document.getElementById('cardNumber').value;
+        try {
+            const response = await fetch('api/card?number=' + cardNumber);
+            if (!response.ok) {
+                throw new Error("Error");
+            }
+            const data = await response.json();
+            let table = document.getElementById('resultTable');
+            table.innerHTML = `
+                <tr>
+                    <td>${data.number}</td>
+                    <td>${data.name}</td>
+                    <td>Example Bank</td>
+                </tr>
+            `;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function postData() {
+        let value = document.getElementById('cardNumber').value;
+        let table = document.getElementById('resultTable');
+        try {
+            const response = await fetch('api/card', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cardNumber: value
+                })
+            });
+            if (!response.ok) {
+                throw new Error("Error");
+            }
+            const data = await response.json();
+            table.innerHTML = `
+                <tr>
+                    <td>${data.bin}</td>
+                    <td>${data.alphaCode}</td>
+                    <td>${data.bankName}</td>
+                </tr>
+            `;
+        } catch (error) {
+            table.innerHTML = ``;
+            console.log(error);
+        }
+    }
+</script>
+
+</body>
+</html>

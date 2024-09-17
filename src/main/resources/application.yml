@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: pryvatbank
+  datasource:
+    password: 12345
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/pryvatbank
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      schema-locations: classpath:schema/schema.sql
+      mode: always
+      data-locations: classpath:schema/data.sql
