@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Scheduler {
 
-    private Logger LOGGER = LoggerFactory.getLogger(Scheduler.class);
+    private final Logger logger = LoggerFactory.getLogger(Scheduler.class);
 
     private final RestTemplate restTemplate;
 
@@ -27,9 +27,9 @@ public class Scheduler {
 
     @Scheduled(cron = "0 0/2 * * * ?")
     public void testCall() throws IOException {
-        LOGGER.info("Request start");
+        logger.info("Request start");
         List<Card> cards = zipService.processZipFileFromURL("https://ecom-bininfo.s3.eu-west-1.amazonaws.com/bininfo.json.zip");
-        LOGGER.info("Request ends");
+        logger.info("Request ends");
         cardService.saveAll(cards);
     }
 }
