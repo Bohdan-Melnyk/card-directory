@@ -5,7 +5,7 @@ How to run the project.
 
 All table will create automatically from schema.sql by path `src/main/resources/schema`.
 
-To avoid downtime, I create two tables:
+To avoid downtime, I created two identical tables with different names:
 
 `cards`: the main table used by the service to access data.
 
