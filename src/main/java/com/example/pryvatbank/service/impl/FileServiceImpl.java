@@ -55,7 +55,6 @@ public class FileServiceImpl implements ZipService {
     }
 
     private List<CardTemp> parseJson(String content) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(content, new TypeReference<List<CardTemp>>() {});
+        return new ObjectMapper().readValue(content, new TypeReference<List<CardTemp>>() {});
     }
 }
