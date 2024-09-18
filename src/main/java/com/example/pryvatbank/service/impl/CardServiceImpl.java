@@ -8,8 +8,6 @@ import com.example.pryvatbank.repo.CardTempRepo;
 import com.example.pryvatbank.repo.DataBaseUpdates;
 import com.example.pryvatbank.service.CardService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +19,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CardServiceImpl implements CardService {
 
-    private final Logger logger = LoggerFactory.getLogger(CardServiceImpl.class);
-
     private final CardRepo cardRepo;
 
     private final CardTempRepo cardTempRepo;
@@ -31,8 +27,8 @@ public class CardServiceImpl implements CardService {
 
     @Override
     public CardResponseDto getCardInfo(String cardNumber) {
-        long parseLong = Long.parseLong(cardNumber.trim() + "000");
-        Optional<Card> cardOptional = cardRepo.findByNumberInRange(BigInteger.valueOf(parseLong));
+        String fullCardNumber = cardNumber.replaceAll("\\s", "") + "000";
+        Optional<Card> cardOptional = cardRepo.findByNumberInRange(BigInteger.valueOf(Long.parseLong(fullCardNumber)));
         if (cardOptional.isEmpty()) {
             throw new RuntimeException("Not found");
         }
@@ -46,13 +42,9 @@ public class CardServiceImpl implements CardService {
 
     @Override
     @Transactional
-    public void saveAll(List<CardTemp> cards) {
+    public void switchTables(List<CardTemp> cards) {
         cardTempRepo.saveAll(cards);
-    }
 
-    @Override
-    @Transactional
-    public void switchTables() {
         dataBaseUpdates.renameCardsToCardsOld();
 
         dataBaseUpdates.renameCardsTempToCards();

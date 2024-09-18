@@ -19,9 +19,8 @@ public class Scheduler {
     private final CardService cardService;
 
     @Scheduled(fixedRate = 3600000)
-    public void testCall() throws IOException {
+    public void fetchData() throws IOException {
         List<CardTemp> cardTemps = zipService.processZipFileFromURL("https://ecom-bininfo.s3.eu-west-1.amazonaws.com/bininfo.json.zip");
-        cardService.saveAll(cardTemps);
-        cardService.switchTables();
+        cardService.switchTables(cardTemps);
     }
 }

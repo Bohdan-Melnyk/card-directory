@@ -14,7 +14,4 @@ public interface CardRepo extends JpaRepository<Card, Long> {
 
     @Query(value = "select * from cards where :number between min_range and max_range", nativeQuery = true)
     Optional<Card> findByNumberInRange(@Param(value = "number") BigInteger cardNumber);
-
-    @Query(value = "select count(*) from cards", nativeQuery = true)
-    int countAllAmount();
 }

@@ -9,7 +9,5 @@ public interface CardService {
 
     CardResponseDto getCardInfo(String cardNumber);
 
-    void saveAll(List<CardTemp> cardsTemp);
-
-    void switchTables();
+    void switchTables(List<CardTemp> cards);
 }
