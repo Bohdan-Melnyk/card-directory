@@ -38,16 +38,12 @@ public class FileServiceImpl implements ZipService {
 
             while (enumeration.hasMoreElements()) {
                 ZipArchiveEntry entry = enumeration.nextElement();
-                if (!entry.isDirectory() && !entry.getName().contains("/")) {
+                if (!entry.isDirectory() && !entry.getName().contains("/") && entry.getName().endsWith(".json")) {
                     InputStream inputStream = zipFile.getInputStream(entry);
                     String content = new String(inputStream.readAllBytes());
-                    if (entry.getName().endsWith(".json")) {
-                        cards = parseJson(content);
-                    }
+                    cards = parseJson(content);
                 }
             }
-        } catch (Exception e) {
-            Files.deleteIfExists(write);
         } finally {
             Files.deleteIfExists(write);
         }
@@ -55,6 +51,7 @@ public class FileServiceImpl implements ZipService {
     }
 
     private List<CardTemp> parseJson(String content) throws JsonProcessingException {
-        return new ObjectMapper().readValue(content, new TypeReference<List<CardTemp>>() {});
+        return new ObjectMapper().readValue(content, new TypeReference<List<CardTemp>>() {
+        });
     }
 }
