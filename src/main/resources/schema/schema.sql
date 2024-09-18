@@ -1,17 +1,17 @@
 CREATE TABLE IF NOT EXISTS cards
 (
-    bin        BIGINT PRIMARY KEY,
-    min_range  DOUBLE PRECISION,
-    max_range  DOUBLE PRECISION,
+    bin        NUMERIC PRIMARY KEY,
+    min_range  NUMERIC,
+    max_range  NUMERIC,
     alpha_code VARCHAR(255),
     bank_name  VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS cards_old
+CREATE TABLE IF NOT EXISTS cards_temp
 (
-    bin        BIGINT PRIMARY KEY,
-    min_range  BIGINT,
-    max_range  BIGINT,
+    bin        NUMERIC PRIMARY KEY,
+    min_range  NUMERIC,
+    max_range  NUMERIC,
     alpha_code VARCHAR(255),
     bank_name  VARCHAR(255)
 );
