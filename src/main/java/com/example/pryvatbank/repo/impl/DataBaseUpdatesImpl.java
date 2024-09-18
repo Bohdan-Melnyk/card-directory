@@ -3,13 +3,15 @@ package com.example.pryvatbank.repo.impl;
 import com.example.pryvatbank.repo.DataBaseUpdates;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class DataBaseUpdatesImpl implements DataBaseUpdates {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Override
     public void renameCardsToCardsOld() {
