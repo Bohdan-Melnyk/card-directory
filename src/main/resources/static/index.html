@@ -14,6 +14,8 @@
 
     <button type="button" class="btn" onclick="postData()">Search</button>
 
+    <div id="errorMessage" class="error error-message"></div>
+
     <table class="table">
         <thead>
         <tr>
@@ -32,7 +34,9 @@
     async function postData() {
         let value = document.getElementById('cardNumber').value;
         let table = document.getElementById('resultTable');
+        let errorMessage = document.getElementById('errorMessage');
         try {
+            errorMessage.innerText = "";
             const response = await fetch('api/card', {
                 method: 'POST',
                 headers: {
@@ -55,6 +59,7 @@
             `;
         } catch (error) {
             table.innerHTML = ``;
+            errorMessage.innerText = "Wrong card number or number doesn't exist.";
             console.log(error);
         }
     }

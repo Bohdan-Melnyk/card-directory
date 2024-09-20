@@ -19,7 +19,6 @@ body {
     text-align: center;
 }
 
-/* Input field styling */
 label {
     font-size: 14px;
     color: #333;
@@ -29,6 +28,13 @@ label {
 .card {
     font-size: larger;
 }
+
+.error-message {
+    color: crimson;
+    font-size: large;
+    margin-top: 10px;
+}
+
 
 .input {
     width: 90%;
