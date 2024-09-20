@@ -16,11 +16,13 @@ public class Scheduler {
 
     private final ZipService zipService;
 
+    private static final String URL = "https://ecom-bininfo.s3.eu-west-1.amazonaws.com/bininfo.json.zip";
+
     private final CardService cardService;
 
     @Scheduled(fixedRate = 3600000)
     public void fetchData() throws IOException {
-        List<CardTemp> cardTemps = zipService.processZipFileFromURL("https://ecom-bininfo.s3.eu-west-1.amazonaws.com/bininfo.json.zip");
+        List<CardTemp> cardTemps = zipService.processZipFileFromURL(URL);
         cardService.switchTables(cardTemps);
     }
 }

@@ -3,6 +3,7 @@ package com.example.pryvatbank.service.impl;
 import com.example.pryvatbank.dto.CardResponseDto;
 import com.example.pryvatbank.entity.Card;
 import com.example.pryvatbank.entity.CardTemp;
+import com.example.pryvatbank.exception.NotFoundException;
 import com.example.pryvatbank.repo.CardRepo;
 import com.example.pryvatbank.repo.CardTempRepo;
 import com.example.pryvatbank.repo.DataBaseUpdates;
@@ -30,7 +31,7 @@ public class CardServiceImpl implements CardService {
         String fullCardNumber = cardNumber.replaceAll("\\s", "") + "000";
         Optional<Card> cardOptional = cardRepo.findByNumberInRange(BigInteger.valueOf(Long.parseLong(fullCardNumber)));
         if (cardOptional.isEmpty()) {
-            throw new RuntimeException("Not found");
+            throw new NotFoundException("Card with number " + cardNumber + " not found");
         }
         Card card = cardOptional.get();
         return new CardResponseDto(

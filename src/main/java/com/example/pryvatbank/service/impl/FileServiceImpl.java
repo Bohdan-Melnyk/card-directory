@@ -50,7 +50,7 @@ public class FileServiceImpl implements ZipService {
         return cards;
     }
 
-    private List<CardTemp> parseJson(String content) throws JsonProcessingException {
+    public List<CardTemp> parseJson(String content) throws JsonProcessingException {
         return new ObjectMapper().readValue(content, new TypeReference<List<CardTemp>>() {
         });
     }
